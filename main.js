@@ -1,53 +1,66 @@
-let books = [
-    {
-        id: 1,
-        title: "Animal Farm",
-        author: "George Orwell",
-        pages: "112",
-        read: true,
-    },
-    {
-        id: 2,
-        title: "1984",
-        author: "Robert Greene",
-        pages: "449",
-        read: false,
-    }
-]
+let books = [];
 
-let bookCollection = document.querySelectorAll(".book-collection");
+let bookContainer = document.querySelector(".book-container");
 let newBookButton = document.querySelector("#new-book-button");
 let dropDown = document.querySelector("#new-book-container");
 let cancelDropdown = document.getElementById("cancel");
-let addBookButton = document.getElementById("add");
-
+let addBookButton = document.getElementById("add")
 let formInputs = Array.from(document.querySelectorAll(".inputs"));
-
 
 window.addEventListener("keydown", handleClick);
 dropDown.addEventListener("click", handleClick);
 cancelDropdown.addEventListener("click", resetDropdown);
 newBookButton.addEventListener("click", newBookDropDown);
 
-addBookButton.addEventListener("click", (e) => {
-    console.log("test")
+addBookButton.addEventListener("click", () => {
+    let newBook = formInputs.reduce((total, input) => ({
+        ...total, [input.id] : input.value
+    }), {})
+    let bookInfo = new Book(newBook.titleInput, newBook.authorInput, newBook.pagesInput, newBook.readInput);
+    console.log(bookInfo);
+
+    if (bookInfo.title === "" || bookInfo.author === "" || bookInfo.pages === "" || bookInfo.read === "" || bookInfo.read === "Please select an option") {
+        alert("Please fill all sections");
+    } else {
+        books.push(bookInfo);
+        displayBook(bookInfo);
+        resetDropdown();
+    }
 })
 
-function testFunction(input) {
-    console.log(input);
-}
-
-
-
-function book(title, author, pages, read) {
+function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
 }
 
-function displayBook() {
+function displayBook(bookInfo) {
+    let bookDiv = document.createElement("div");
+    bookDiv.classList.add("book-collection");
 
+    let newTitle = document.createElement("p"),
+        newAuthor = document.createElement("p"),
+        newPages = document.createElement("p"),
+        newRead = document.createElement("button");
+
+    newTitle.textContent = bookInfo.title;
+    newAuthor.textContent = bookInfo.author;
+    newPages.textContent = bookInfo.pages;
+    newRead.textContent = bookInfo.read;
+    newRead.addEventListener("click", () => {
+        newRead.textContent = (newRead.textContent === "Yes") ? "No" : "Yes";
+        newRead.style.backgroundColor = (newRead.textContent === "Yes") ? "green" : "darkred";
+    })
+
+    newTitle.classList.add("title");
+    newAuthor.classList.add("author");
+    newPages.classList.add("pages");
+    newRead.classList.add("read");
+    newRead.style.backgroundColor = (newRead.textContent === "Yes") ? "green" : "darkred";
+
+    bookDiv.append(newTitle,newAuthor,newPages,newRead);
+    bookContainer.append(bookDiv);
 }
 
 function newBookDropDown() {
@@ -56,7 +69,9 @@ function newBookDropDown() {
 }
 
 function resetDropdown() {
-    console.log("reset")
+    formInputs.forEach((item) => {
+        item.value = "";
+    })
     dropDown.style.opacity = "0";
     dropDown.style.pointerEvents = "none";
 }
@@ -66,8 +81,10 @@ function handleClick(input) {
         resetDropdown()
     }
 
-    if (input.key === "Escape") {
+    else if (input.key === "Escape") {
         resetDropdown()
     }
-
 }
+
+let exampleBook = new Book("Animal Farm", "George Orwell", "112", "Yes");
+displayBook(exampleBook);
