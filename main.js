@@ -47,17 +47,21 @@ function displayBook(bookInfo) {
     newTitle.textContent = bookInfo.title;
     newAuthor.textContent = bookInfo.author;
     newPages.textContent = bookInfo.pages;
-    newRead.textContent = bookInfo.read;
+    if (bookInfo.read === "Yes") {
+        newRead.textContent = "Read";
+    } else {
+        newRead.textContent = "Not Read";
+    }
     newRead.addEventListener("click", () => {
-        newRead.textContent = (newRead.textContent === "Yes") ? "No" : "Yes";
-        newRead.style.backgroundColor = (newRead.textContent === "Yes") ? "green" : "darkred";
+        newRead.textContent = (newRead.textContent === "Read") ? "Not Read" : "Read";
+        newRead.style.backgroundColor = (newRead.textContent === "Read") ? "green" : "darkred";
     })
 
     newTitle.classList.add("title");
     newAuthor.classList.add("author");
     newPages.classList.add("pages");
     newRead.classList.add("read");
-    newRead.style.backgroundColor = (newRead.textContent === "Yes") ? "green" : "darkred";
+    newRead.style.backgroundColor = (newRead.textContent === "Read") ? "green" : "darkred";
 
     bookDiv.append(newTitle,newAuthor,newPages,newRead);
     bookContainer.append(bookDiv);
@@ -86,5 +90,5 @@ function handleClick(input) {
     }
 }
 
-let exampleBook = new Book("Animal Farm", "George Orwell", "112", "Yes");
+let exampleBook = new Book("Animal Farm", "George Orwell", "112", "No");
 displayBook(exampleBook);
