@@ -1,0 +1,156 @@
+* {
+    font-family: sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #202124;
+}
+
+
+.book-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+}
+
+.book-collection {
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+    width: 100px;
+    min-width: 100px;
+    height: 180px;
+    background: #303134;
+    border-radius: 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+
+}
+
+button {
+    background: none;
+    color: inherit;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+
+#new-book-button {
+    background: #303134;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+
+
+.text-inputs {
+    text-align: end;
+    padding: 15px;
+    margin-top: 10px;
+    margin-right: 35px;
+}
+
+#new-book-container {
+    margin: auto;
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.35);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    pointer-events: none;
+
+
+    transition: all 0.2s ease;
+}
+
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    z-index: 10;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    background: whitesmoke;
+    border-radius: 10px;
+
+    padding: 20px;
+    width: 300px;
+    height: 500px;
+}
+
+
+.submit-buttons {
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#add, #cancel {
+    padding: 10px;
+    margin: 8px;
+    width: 100px;
+    border-radius: 10px;
+}
+
+#add {
+    color: white;
+    background: #1a73e8;
+}
+
+#add:hover {
+    background-color: #2b7de9;
+    border-color: transparent;
+    box-shadow: 0 1px 2px 0 rgb(66 133 244 / 30%), 0 1px 3px 1px rgb(66 133 244 / 15%);
+}
+
+
+.new-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+#new-book-button {
+    position: fixed;
+}
+
+
+footer {
+    position: fixed;
+    bottom: 0;
+    height: 65px;
+    width: 100%;
+    background: #303134;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#footer-text {
+    margin-left: 15px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    color: black;
+}
+
