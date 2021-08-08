@@ -60,7 +60,7 @@ function displayBook(bookInfo) {
 
     newTitle.textContent = bookInfo.title;
     newAuthor.textContent = bookInfo.author;
-    newPages.textContent = bookInfo.pages;
+    newPages.textContent = bookInfo.pages + " pages";
 
     if (bookInfo.read === "Yes") {
         newRead.textContent = "Read";
@@ -115,20 +115,15 @@ function removeBookUpdate(e) {
     let nodes = Array.from(e.target.parentElement.childNodes)
     let data = nodes[0];
     let id = data.getAttribute("data-id")
-
-
-
     // books = books.filter((book) => {
     //     return book !== (book.id.toString() === id);
     // })
-
     books.forEach((item) => {
         if (item.id.toString() === id) {
             books = books.filter(book => book !== item);
             console.log("removed")
         }
     })
-    
     updateDisplay();
 }
 
@@ -140,7 +135,7 @@ function updateDisplay() {
 }
 
 let exampleBook = new Book(0,"Animal Farm", "George Orwell", "112", "No");
-let example2 = new Book(1, "1984", "George Orwell", "Unknown", "No");
+let example2 = new Book(1, "1984", "George Orwell", "328", "Yes");
 
 books.push(exampleBook, example2);
 
