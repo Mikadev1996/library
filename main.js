@@ -111,38 +111,38 @@ function handleClick(input) {
     }
 }
 
-function customFilter(book) {
-    books.forEach((item, index) => {
-        let isThisNotTheBook = item !== book;
-        if (!isThisNotTheBook) {
-            books.splice(index, 1);
-        }
-    })
-}
-
 function removeBookUpdate(e) {
     let nodes = Array.from(e.target.parentElement.childNodes)
     let data = nodes[0];
     let id = data.getAttribute("data-id")
-    console.log(id)
-    // books.forEach((item, index) => {
-    //     if (item.id.toString() === id) {
-    //         books.splice(index, 1);
-    //
-    //     }
+
+
+
+    // books = books.filter((book) => {
+    //     return book !== (book.id.toString() === id);
     // })
+
     books.forEach((item) => {
         if (item.id.toString() === id) {
             books = books.filter(book => book !== item);
+            console.log("removed")
         }
+    })
+    
+    updateDisplay();
+}
+
+function updateDisplay() {
+    bookContainer.innerHTML = "";
+    books.forEach((book) => {
+        displayBook(book);
     })
 }
 
 let exampleBook = new Book(0,"Animal Farm", "George Orwell", "112", "No");
 let example2 = new Book(1, "1984", "George Orwell", "Unknown", "No");
 
-books.push(exampleBook);
-books.push(example2);
+books.push(exampleBook, example2);
 
 displayBook(exampleBook);
 displayBook(example2);
