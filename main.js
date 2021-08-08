@@ -16,19 +16,29 @@ addBookButton.addEventListener("click", () => {
     let newBook = formInputs.reduce((total, input) => ({
         ...total, [input.id] : input.value
     }), {})
-    let bookInfo = new Book(newBook.titleInput, newBook.authorInput, newBook.pagesInput, newBook.readInput);
-    console.log(bookInfo);
 
-    if (bookInfo.title === "" || bookInfo.author === "" || bookInfo.pages === "" || bookInfo.read === "" || bookInfo.read === "Please select an option") {
-        alert("Please fill all sections");
-    } else {
-        books.push(bookInfo);
-        displayBook(bookInfo);
-        resetDropdown();
+    let inputs = {title: newBook.titleInput,
+                 author: newBook.authorInput,
+                 pages :newBook.pagesInput,
+                 read: newBook.readInput}
+
+    for (let input in inputs) {
+        let inputValue = inputs[input];
+        if (inputValue === "" || inputValue === "Please select an option") {
+            alert("Please fill all sections");
+            return;
+        }
     }
+
+    let bookInfo = new Book(books.length + 1, newBook.titleInput, newBook.authorInput, newBook.pagesInput, newBook.readInput);
+    console.log(books);
+    books.push(bookInfo);
+    displayBook(bookInfo);
+    resetDropdown();
 })
 
-function Book(title, author, pages, read) {
+function Book(id, title, author, pages, read) {
+    this.id = id;
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -42,28 +52,39 @@ function displayBook(bookInfo) {
     let newTitle = document.createElement("p"),
         newAuthor = document.createElement("p"),
         newPages = document.createElement("p"),
-        newRead = document.createElement("button");
+        newRead = document.createElement("button"),
+        removeBook = document.createElement("button");
+
+    removeBook.textContent = "Remove";
+    removeBook.onclick = removeBookUpdate;
 
     newTitle.textContent = bookInfo.title;
     newAuthor.textContent = bookInfo.author;
     newPages.textContent = bookInfo.pages;
+
     if (bookInfo.read === "Yes") {
         newRead.textContent = "Read";
     } else {
         newRead.textContent = "Not Read";
     }
+
     newRead.addEventListener("click", () => {
+        bookInfo.read = (bookInfo.read === "Yes") ? "No" : "Yes";
         newRead.textContent = (newRead.textContent === "Read") ? "Not Read" : "Read";
         newRead.style.backgroundColor = (newRead.textContent === "Read") ? "green" : "darkred";
+
+        console.log(books);
     })
 
+    newTitle.dataset.id = bookInfo.id;
     newTitle.classList.add("title");
     newAuthor.classList.add("author");
     newPages.classList.add("pages");
     newRead.classList.add("read");
+    removeBook.classList.add("remove-book")
     newRead.style.backgroundColor = (newRead.textContent === "Read") ? "green" : "darkred";
 
-    bookDiv.append(newTitle,newAuthor,newPages,newRead);
+    bookDiv.append(newTitle,newAuthor,newPages,newRead, removeBook);
     bookContainer.append(bookDiv);
 }
 
@@ -90,5 +111,38 @@ function handleClick(input) {
     }
 }
 
-let exampleBook = new Book("Animal Farm", "George Orwell", "112", "No");
+function customFilter(book) {
+    books.forEach((item, index) => {
+        let isThisNotTheBook = item !== book;
+        if (!isThisNotTheBook) {
+            books.splice(index, 1);
+        }
+    })
+}
+
+function removeBookUpdate(e) {
+    let nodes = Array.from(e.target.parentElement.childNodes)
+    let data = nodes[0];
+    let id = data.getAttribute("data-id")
+    console.log(id)
+    // books.forEach((item, index) => {
+    //     if (item.id.toString() === id) {
+    //         books.splice(index, 1);
+    //
+    //     }
+    // })
+    books.forEach((item) => {
+        if (item.id.toString() === id) {
+            books = books.filter(book => book !== item);
+        }
+    })
+}
+
+let exampleBook = new Book(0,"Animal Farm", "George Orwell", "112", "No");
+let example2 = new Book(1, "1984", "George Orwell", "Unknown", "No");
+
+books.push(exampleBook);
+books.push(example2);
+
 displayBook(exampleBook);
+displayBook(example2);

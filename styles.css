@@ -20,9 +20,9 @@ body {
 
     text-align: center;
     margin: 3px;
-    width: 125px;
+    width: 145px;
     min-width: 100px;
-    height: 180px;
+    height: 220px;
     background: #303134;
     border-radius: 5px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
@@ -155,11 +155,16 @@ a:visited {
 }
 
 .read {
-    min-width: 50px;
+    width: 80px;
     border-radius: 5px;
     padding: 5px;
 }
 
+.read   :hover {
+    background: red;
+    transition-timing-function: ease-in-out;
+    transition: 0.4s;
+}
 
 .title {
     font-weight: bold;
@@ -168,4 +173,12 @@ a:visited {
 .author {
     font-style: italic;
     height: 30px;
+}
+
+.remove-book {
+    width: 70px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px;
+    background: #27272a;
 }
