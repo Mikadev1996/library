@@ -6,6 +6,7 @@ let dropDown = document.querySelector("#new-book-container");
 let cancelDropdown = document.getElementById("cancel");
 let addBookButton = document.getElementById("add")
 let formInputs = Array.from(document.querySelectorAll(".inputs"));
+let reset = document.getElementById("reset");
 
 window.addEventListener("keydown", handleClick);
 dropDown.addEventListener("click", handleClick);
@@ -31,9 +32,9 @@ addBookButton.addEventListener("click", () => {
     }
 
     let bookInfo = new Book(books.length + 1, newBook.titleInput, newBook.authorInput, newBook.pagesInput, newBook.readInput);
-    console.log(books);
     books.push(bookInfo);
     displayBook(bookInfo);
+    updateLocalStorage();
     resetDropdown();
 })
 
@@ -72,8 +73,7 @@ function displayBook(bookInfo) {
         bookInfo.read = (bookInfo.read === "Yes") ? "No" : "Yes";
         newRead.textContent = (newRead.textContent === "Read") ? "Not Read" : "Read";
         newRead.style.backgroundColor = (newRead.textContent === "Read") ? "green" : "darkred";
-
-        console.log(books);
+        updateLocalStorage()
     })
 
     newTitle.dataset.id = bookInfo.id;
@@ -121,7 +121,7 @@ function removeBookUpdate(e) {
     books.forEach((item) => {
         if (item.id.toString() === id) {
             books = books.filter(book => book !== item);
-            console.log("removed")
+            updateLocalStorage();
         }
     })
     updateDisplay();
@@ -129,15 +129,39 @@ function removeBookUpdate(e) {
 
 function updateDisplay() {
     bookContainer.innerHTML = "";
-    books.forEach((book) => {
-        displayBook(book);
-    })
+    if (books) {
+        books.forEach((book) => {
+            displayBook(book);
+        })
+    }
 }
+
+// Example books
 
 let exampleBook = new Book(0,"Animal Farm", "George Orwell", "112", "No");
 let example2 = new Book(1, "1984", "George Orwell", "328", "Yes");
-
 books.push(exampleBook, example2);
+updateDisplay();
 
-displayBook(exampleBook);
-displayBook(example2);
+// Local Storage
+
+function updateLocalStorage() {
+    localStorage.setItem("books", JSON.stringify(books));
+}
+
+function restoreLocalStorage() {
+    return JSON.parse(localStorage.getItem("books"));
+}
+
+reset.onclick = () => {
+    console.log("reset")
+    books = [];
+    localStorage.clear();
+    books.push(exampleBook, example2);
+    updateLocalStorage()
+    updateDisplay();
+    return books;
+}
+
+books = restoreLocalStorage();
+updateDisplay()
