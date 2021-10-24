@@ -12,16 +12,28 @@ window.addEventListener("keydown", handleClick);
 dropDown.addEventListener("click", handleClick);
 cancelDropdown.addEventListener("click", resetDropdown);
 newBookButton.addEventListener("click", newBookDropDown);
+addBookButton.addEventListener("click", makeBook);
 
-addBookButton.addEventListener("click", () => {
+class Book {
+    constructor(id, title, author, pages, read) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+}
+
+function makeBook() {
     let newBook = formInputs.reduce((total, input) => ({
         ...total, [input.id] : input.value
     }), {})
 
     let inputs = {title: newBook.titleInput,
-                 author: newBook.authorInput,
-                 pages :newBook.pagesInput,
-                 read: newBook.readInput}
+        author: newBook.authorInput,
+        pages :newBook.pagesInput,
+        read: newBook.readInput
+    }
 
     for (let input in inputs) {
         let inputValue = inputs[input];
@@ -36,14 +48,6 @@ addBookButton.addEventListener("click", () => {
     displayBook(bookInfo);
     updateLocalStorage();
     resetDropdown();
-})
-
-function Book(id, title, author, pages, read) {
-    this.id = id;
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
 }
 
 function displayBook(bookInfo) {
