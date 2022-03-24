@@ -1,3 +1,8 @@
+import { initializeApp } from 'firebase/app';
+import {getFirebaseConfig} from "./firebase-config";
+const firebaseAppConfig = getFirebaseConfig();
+initializeApp(firebaseAppConfig);
+
 let books = [];
 
 let bookContainer = document.querySelector(".book-container");
